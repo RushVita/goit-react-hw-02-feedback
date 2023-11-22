@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { Statistics } from './Statistics/Statistics';
-import { Feedback } from './Feedback/Feedback';
 
 export class App extends Component {
   state = {
@@ -9,12 +8,32 @@ export class App extends Component {
     bad: 0,
   };
 
+  incrementGood(evt) {
+    this.state.good += evt;
+    console.log(this.state.good);
+  }
+
   render() {
-    const { good, neutral, bad } = this.state;
     return (
       <div>
-        <Feedback />
-        <Statistics good={good} neutral={neutral} bad={bad} />
+        <div>
+          <h1>Plese leave Feedback</h1>
+          <button
+            type="button"
+            onClick={evt => {
+              return this.incrementGood(1);
+            }}
+          >
+            Good {this.state.good}
+          </button>
+          <button type="button">Neutral</button>
+          <button type="button">Bad</button>
+        </div>
+        <Statistics
+          good={this.state.good}
+          neutral={this.state.neutral}
+          bad={this.state.bad}
+        />
       </div>
     );
   }
