@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Statistics } from './Statistics/Statistics';
+import { Feedback } from './Feedback/Feedback';
 
 export class App extends Component {
   state = {
@@ -8,31 +9,55 @@ export class App extends Component {
     bad: 0,
   };
 
-  incrementGood(evt) {
-    this.state.good += evt;
-    console.log(this.state.good);
-  }
+  incrementGood = () => {
+    this.setState(prevState => ({
+      good: prevState.good + 1,
+    }));
+  };
+  incrementNeutral = () => {
+    this.setState(prevState => ({
+      neutral: prevState.neutral + 1,
+    }));
+  };
+  incrementBad = () => {
+    this.setState(prevState => ({
+      bad: prevState.bad + 1,
+    }));
+  };
+
+  countTotalFeedback = () => {
+    const total = this.state.good + this.state.neutral + this.state.bad;
+    return total;
+  };
+  countPositiveFeedbackPercentage = () => {
+    let total = 0;
+    let positiveFeedback = this.state.good;
+    let negativeFeedback = this.state.neutral + this.state.bad;
+    let totalFeedback = positiveFeedback + negativeFeedback;
+    if (negativeFeedback !== 0) {
+      total = (positiveFeedback * 100) / totalFeedback;
+    }
+    if (positiveFeedback > 0 && negativeFeedback === 0) {
+      total = 1 * 100;
+    }
+
+    return Math.round(total);
+  };
 
   render() {
     return (
       <div>
-        <div>
-          <h1>Plese leave Feedback</h1>
-          <button
-            type="button"
-            onClick={evt => {
-              return this.incrementGood(1);
-            }}
-          >
-            Good {this.state.good}
-          </button>
-          <button type="button">Neutral</button>
-          <button type="button">Bad</button>
-        </div>
+        <Feedback
+          onIncrementGood={this.incrementGood}
+          onIncrementNeutral={this.incrementNeutral}
+          onIncrementBad={this.incrementBad}
+        />
         <Statistics
           good={this.state.good}
           neutral={this.state.neutral}
           bad={this.state.bad}
+          total={this.countTotalFeedback()}
+          positiveFeedback={this.countPositiveFeedbackPercentage()}
         />
       </div>
     );

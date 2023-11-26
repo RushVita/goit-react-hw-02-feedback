@@ -1,21 +1,18 @@
-import { Statistics } from 'components/Statistics/Statistics';
-
-export const Feedback = ({ good, neutral, bad }) => {
+export const Feedback = ({ onIncrementGood, onIncrementNeutral, onIncrementBad }) => {
   return (
     <>
       <div>
         <h1>Plese leave Feedback</h1>
-        <button>Good</button>
-        <button>Neutral</button>
-        <button>Bad</button>
+        <button type="button" onClick={onIncrementGood}>
+          Good
+        </button>
+        <button type="button" onClick={onIncrementNeutral}>
+          Neutral
+        </button>
+        <button type="button" onClick={onIncrementBad}>
+          Bad
+        </button>
       </div>
-      <Statistics
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        total={1}
-        positivePercentage={1}
-      />
     </>
   );
 };
