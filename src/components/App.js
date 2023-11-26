@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Statistics } from './Statistics/Statistics';
-import { Feedback } from './Feedback/Feedback';
+import Feedback from './Feedback/Feedback';
 
 export class App extends Component {
   state = {
@@ -59,6 +59,7 @@ export class App extends Component {
           total={this.countTotalFeedback()}
           positiveFeedback={this.countPositiveFeedbackPercentage()}
         />
+       
       </div>
     );
   }
